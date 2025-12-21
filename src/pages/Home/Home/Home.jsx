@@ -4,6 +4,7 @@ import HowItWorks from '../HowItWorks/HowItWorks';
 import Services from '../Services/Services';
 import SalseTeam from '../SalseTeam/SalseTeam';
 import Features from '../Features/Features';
+import BeAMarchent from '../BeAMarchent/BeAMarchent';
 
 const Home = () => {
     return (
@@ -15,6 +16,9 @@ const Home = () => {
             <Services></Services>
             <SalseTeam></SalseTeam>
             <Features></Features>
+            <div className='my-5'>
+                <BeAMarchent></BeAMarchent>
+            </div>
         </div>
     );
 };

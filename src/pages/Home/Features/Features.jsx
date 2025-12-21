@@ -25,7 +25,7 @@ const features = [
 
 const Features = () => {
     return (
-        <section className="bg-gray-100 py-16">
+        <section className="bg-gray-100 py-16 w-[90%] mx-auto">
             <div className="w-[90%] max-w-6xl mx-auto space-y-8">
                 {features.map((item) => (
                     <div
