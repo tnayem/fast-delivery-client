@@ -5,6 +5,7 @@ import Services from '../Services/Services';
 import SalseTeam from '../SalseTeam/SalseTeam';
 import Features from '../Features/Features';
 import BeAMarchent from '../BeAMarchent/BeAMarchent';
+import Testimonials from '../Testimonials/Testimonials';
 
 const Home = () => {
     return (
@@ -19,6 +20,7 @@ const Home = () => {
             <div className='my-5'>
                 <BeAMarchent></BeAMarchent>
             </div>
+            <Testimonials></Testimonials>
         </div>
     );
 };
