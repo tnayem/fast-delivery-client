@@ -45,7 +45,7 @@ const SalseTeam = () => {
         </Marquee>
 
         {/* dotted line */}
-        <div className="mt-12 border-t border-dashed border-gray-300"></div>
+        <div className="mt-12 border-t border-dashed border-gray-300 border-2"></div>
       </div>
     </section>
   );
