@@ -1,15 +1,19 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router';
 import FastDeliveryLogo from './FastDeliveryLogo';
+import useAuth from '../../../hooks/useAuth';
 
 const Navbar = () => {
+    const {user,logOut}= useAuth()
     const navItems = <>
-        <li><NavLink to="/services">Services</NavLink></li>
+        <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/sendParcel">Send a Parcel</NavLink></li>
         <li><NavLink to="/coverage">Coverage</NavLink></li>
         <li><NavLink to="/aboutUs">About Us</NavLink></li>
         <li><NavLink to="/pricing">Pricing</NavLink></li>
         <li><NavLink to="/beaRider">Be a Rider</NavLink></li>
     </>
+    
     return (
         <div className="navbar bg-base-100 w-[90%] mx-auto">
             <div className="navbar-start">
@@ -23,7 +27,7 @@ const Navbar = () => {
                         {navItems}
                     </ul>
                 </div>
-                <Link to="/"><FastDeliveryLogo></FastDeliveryLogo></Link>
+                <FastDeliveryLogo></FastDeliveryLogo>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -31,7 +35,11 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                {
+                    user ? <Link onClick={()=>logOut()} className='btn text-black'>Logout</Link> :
+                    <Link to='/login' className='btn text-black'>Login</Link>
+                }
+                
             </div>
         </div>
     );
