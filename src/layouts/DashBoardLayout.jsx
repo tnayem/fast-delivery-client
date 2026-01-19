@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
+import FastDeliveryLogo from '../pages/Home/shared/FastDeliveryLogo';
 
 const DashBoardLayout = () => {
     return (
@@ -36,6 +37,7 @@ const DashBoardLayout = () => {
             <div className="drawer-side">
                 <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu bg-base-200 min-h-full w-80 p-4">
+                    <FastDeliveryLogo></FastDeliveryLogo>
                     {/* Sidebar content here */}
                     <li><Link to='myParcels'>My Parcels</Link></li>
                     <li><a>Sidebar Item b</a></li>
