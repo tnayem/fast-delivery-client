@@ -57,53 +57,52 @@ const SendParcel = () => {
     }, [selectedType, watchedWeight, watchedSenderCity, watchedReceiverCity]);
 
     const onFormSubmit = (data) => {
-        console.log(data);
-        axiosSecure.post('/parcels',data)
-        .then(res=>{
-            console.log(res.data);
-        })
-        // Swal.fire({
-        //     title: 'Booking Summary',
-        //     html: `
-        //         <div style="font-size:14px; color:#00302E; text-align:left;">
-        //             <strong>Parcel Details</strong><br/>
-        //             Type: ${data.parcelType}<br/>
-        //             Weight: ${data.weight || 0} KG<br/><br/>
+        Swal.fire({
+            title: 'Booking Summary',
+            html: `
+                <div style="font-size:14px; color:#00302E; text-align:left;">
+                    <strong>Parcel Details</strong><br/>
+                    Type: ${data.parcelType}<br/>
+                    Weight: ${data.weight || 0} KG<br/><br/>
 
-        //             <strong>Sender</strong><br/>
-        //             ${data.senderName || ''}, ${data.senderCity || ''}<br/>
-        //             ${data.senderAddress || ''}<br/><br/>
+                    <strong>Sender</strong><br/>
+                    ${data.senderName || ''}, ${data.senderCity || ''}<br/>
+                    ${data.senderAddress || ''}<br/><br/>
 
-        //             <strong>Receiver</strong><br/>
-        //             ${data.receiverName || ''}, ${data.receiverCity || ''}<br/>
-        //             ${data.receiverAddress || ''}<br/><br/>
+                    <strong>Receiver</strong><br/>
+                    ${data.receiverName || ''}, ${data.receiverCity || ''}<br/>
+                    ${data.receiverAddress || ''}<br/><br/>
 
-        //             <strong>Total Delivery Charge:</strong> ৳${totalPrice}
-        //         </div>
-        //     `,
-        //     showCancelButton: true,
-        //     confirmButtonText: 'Confirm & Pay',
-        //     cancelButtonText: 'Edit Details',
-        //     confirmButtonColor: '#C5E76C',
-        //     cancelButtonColor: '#999999',
-        //     customClass: {
-        //         popup: 'rounded-2xl p-6'
-        //     }
-        // }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         console.log("Final Booking Data:", {
-        //             ...data,
-        //             totalPrice,
-        //             created_by: user?.email,
-        //             pement_status: 'unpaid',
-        //             delivery_status: 'not_collected',
-        //             creation_date: new Date().toLocaleString('en-BD'),
-        //             tracking_Id: generateTrackingId()
+                    <strong>Total Delivery Charge:</strong> ৳${totalPrice}
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Confirm & Pay',
+            cancelButtonText: 'Edit Details',
+            confirmButtonColor: '#C5E76C',
+            cancelButtonColor: '#999999',
+            customClass: {
+                popup: 'rounded-2xl p-6'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const singleParcelData = {
+                    ...data,
+                    totalPrice,
+                    created_by: user?.email,
+                    pement_status: 'unpaid',
+                    delivery_status: 'not_collected',
+                    creation_date: new Date().toLocaleString('en-BD'),
+                    tracking_Id: generateTrackingId()
 
-        //         });
-        //         reset();
-        //     }
-        // });
+                };
+                axiosSecure.post('/parcels', singleParcelData)
+                    .then(res => {
+                        console.log(res.data);
+                    })
+                reset();
+            }
+        });
     };
 
     return (
