@@ -1,15 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 
 const Register = () => {
     const {createUser} = useAuth()
+    const location = useLocation()
+    const from = location?.state || '/'
+    const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors }, } = useForm()
     const onSubmit = data => {
         createUser(data.email,data.password)
         .then(result=>{
             console.log(result.user);
+            navigate(from)
         })
         .catch(error=>{
             console.log(error);

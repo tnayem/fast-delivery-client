@@ -100,7 +100,7 @@ const MyParcels = () => {
                                 </td>
 
                                 <td>
-                                    <span className="badge badge-outline capitalize">
+                                    <span className="badge capitalize">
                                         {parcel.delivery_status.replaceAll('_', ' ')}
                                     </span>
                                 </td>
