@@ -9,6 +9,8 @@ import SendParcel from "../pages/SendParcel/SendParcel";
 import PrivateRout from "../routs/PrivateRout";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels";
+import Payment from "../pages/Dashboard/Payment";
+import PaymentSuccess from "../pages/Dashboard/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path:'/register',
         element:<Register></Register>
+      },
+      {
+        path:'/payment/success/:tranId',
+        element:<PaymentSuccess></PaymentSuccess>
       }
     ]
   },
@@ -50,6 +56,11 @@ export const router = createBrowserRouter([
       {
         path:'myParcels',
         element:<MyParcels></MyParcels>
+      },
+      {
+        path:'payment/:id',
+        loader:({params})=>fetch(`http://localhost:5000/parcels/${params.id}`),
+        element:<Payment></Payment>
       }
     ]
   }

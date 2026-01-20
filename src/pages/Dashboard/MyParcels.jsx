@@ -2,10 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 const MyParcels = () => {
     const axiosSecure = useAxiosSecure();
     const { user, loading } = useAuth();
+    const navigate = useNavigate()
 
     const {
         data: parcels = [],
@@ -49,7 +51,10 @@ const MyParcels = () => {
             }
         });
     };
-
+    // Payment 
+    const handlePay=(id)=>{
+        navigate(`/dashboard/payment/${id}`)
+    }
     return (
         <div className="bg-base-100 shadow-xl rounded-xl p-4">
             <h2 className="text-2xl font-bold mb-4">
@@ -95,7 +100,7 @@ const MyParcels = () => {
                                             : 'badge-error'
                                             }`}
                                     >
-                                        {parcel.payment_status}
+                                        {parcel?.payment_status}
                                     </span>
                                 </td>
 
@@ -107,7 +112,9 @@ const MyParcels = () => {
 
                                 <td className="text-center space-x-1">
                                     <button className="btn btn-xs btn-info">View</button>
-                                    <button className="btn btn-xs btn-warning">Track</button>
+                                    <button
+                                        onClick={()=>handlePay(parcel._id)}
+                                    className="btn btn-xs btn-warning">Pay</button>
                                     <button
                                         onClick={() => handleDelete(parcel._id)}
                                         className="btn btn-xs btn-error"
