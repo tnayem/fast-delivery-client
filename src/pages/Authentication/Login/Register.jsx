@@ -2,22 +2,43 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import { Link, useLocation, useNavigate } from 'react-router';
+import axios from 'axios';
 
 const Register = () => {
-    const {createUser} = useAuth()
+    const { createUser,updateUser} = useAuth()
     const location = useLocation()
     const from = location?.state || '/'
     const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors }, } = useForm()
-    const onSubmit = data => {
-        createUser(data.email,data.password)
-        .then(result=>{
-            console.log(result.user);
-            navigate(from)
-        })
-        .catch(error=>{
-            console.log(error);
-        })
+    const imageKey = import.meta.env.VITE_image_api_key
+    const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${imageKey}`;
+    const onSubmit = async(data) => {
+        const imageFile = data.image[0];
+        const formData = new FormData();
+        formData.append('image',imageFile)
+        const imageRes = await axios.post(imageUploadUrl,formData)
+        const photoUrl = (imageRes.data.data.display_url);
+        // Create user
+        createUser(data.email, data.password)
+            .then(result => {
+                // Update Mongodb 
+                // Update profile in firebase 
+                updateUser({
+                    displayName:data.name,
+                    photoURL:photoUrl
+                })
+                .then(result=>{
+                    console.log(result);
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+                console.log(result.user);
+                navigate(from)
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
     return (
         <div className='card bg-base-100 m-10 shrink-0 shadow-2xl p-2'>
@@ -29,6 +50,19 @@ const Register = () => {
                     <label className="label">Name</label>
                     <input {...register("name", { required: true })} type="text" className="input w-full" placeholder="Your Name" />
                     {errors.name && <p className='text-red-700'>Name is Required</p>}
+                    {/* Image upload */}
+                    <label className="label">Profile Image</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="file-input file-input-bordered w-full"
+                        {...register("image", {
+                            required: "Profile image is required",
+                        })}
+                    />
+                    {errors.image && (
+                        <p className="text-red-700">{errors.image.message}</p>
+                    )}
                     {/* Email Input */}
                     <label className='label'>Email</label>
                     <input {...register("email", {
@@ -37,7 +71,7 @@ const Register = () => {
                             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                             message: "Please enter a valid email address",
                         }
-                    })} type='email' placeholder='Your Email' className='input w-full'/>
+                    })} type='email' placeholder='Your Email' className='input w-full' />
                     {errors.email && <p className='text-red-700'>{errors.email.message}</p>}
                     {/* Password Input */}
                     <label className="label">Password</label>
