@@ -11,6 +11,8 @@ import DashBoardLayout from "../layouts/DashBoardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels";
 import Payment from "../pages/Dashboard/Payment";
 import PaymentSuccess from "../pages/Dashboard/PaymentSuccess";
+import BeARider from "../pages/Dashboard/BeARider";
+import PendingRiders from "../pages/Dashboard/PendingRiders";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +30,11 @@ export const router = createBrowserRouter([
         {
           path:'/sendParcel',
           element:<PrivateRout><SendParcel></SendParcel></PrivateRout>
+        },
+        {
+          path:'/beARider',
+          element:<PrivateRout><BeARider></BeARider></PrivateRout>,
+          loader: ()=>fetch("/werehouse.json")
         }
     ]
   },
@@ -61,6 +68,10 @@ export const router = createBrowserRouter([
         path:'payment/:id',
         loader:({params})=>fetch(`http://localhost:5000/parcels/${params.id}`),
         element:<Payment></Payment>
+      },
+      {
+        path:'pendingRiders',
+        element:<PendingRiders></PendingRiders>
       }
     ]
   }

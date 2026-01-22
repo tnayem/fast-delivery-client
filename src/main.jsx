@@ -15,7 +15,8 @@ createRoot(document.getElementById('root')).render(
       <QueryClientProvider client={queryClient }>
         <AuthProvider>
           <Toaster position="top-right" />
-          <RouterProvider router={router} />
+          <RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
+          
         </AuthProvider>
       </QueryClientProvider>
     </div>

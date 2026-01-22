@@ -1,8 +1,11 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router';
+import { Link, NavLink, Outlet } from 'react-router';
 import FastDeliveryLogo from '../pages/Home/shared/FastDeliveryLogo';
+import { CheckCircle, Clock, Package, Users } from 'lucide-react';
 
 const DashBoardLayout = () => {
+    const activeClass = "bg-[#CCE866] text-gray-800 font-bold rounded-lg";
+    const normalClass = "text-gray-700 hover:bg-gray-200 rounded-lg";
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -30,17 +33,56 @@ const DashBoardLayout = () => {
                 </div>
                 {/* Page content here */}
                 <div>
-                   <Outlet></Outlet>
+                    <Outlet></Outlet>
                 </div>
 
             </div>
             <div className="drawer-side">
                 <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu bg-base-200 min-h-full w-80 p-4">
-                    <FastDeliveryLogo></FastDeliveryLogo>
-                    {/* Sidebar content here */}
-                    <li><Link to='myParcels'>My Parcels</Link></li>
-                    <li><a>Sidebar Item b</a></li>
+                <ul className="menu bg-base-200 min-h-full w-80 p-4 space-y-2">
+                    <li>
+                        <FastDeliveryLogo />
+                    </li>
+
+                    {/* My Parcels */}
+                    <li>
+                        <NavLink
+                            to="myParcels"
+                            className={({ isActive }) => (isActive ? activeClass : normalClass)}
+                        >
+                            <Package className="w-4 h-4 mr-2" /> My Parcels
+                        </NavLink>
+                    </li>
+
+                    {/* Active Riders */}
+                    <li>
+                        <NavLink
+                            to="activeRiders"
+                            className={({ isActive }) => (isActive ? activeClass : normalClass)}
+                        >
+                            <Users className="w-4 h-4 mr-2" /> Active Riders
+                        </NavLink>
+                    </li>
+
+                    {/* Pending Riders */}
+                    <li>
+                        <NavLink
+                            to="pendingRiders"
+                            className={({ isActive }) => (isActive ? activeClass : normalClass)}
+                        >
+                            <Clock className="w-4 h-4 mr-2" /> Pending Riders
+                        </NavLink>
+                    </li>
+
+                    {/* Sidebar Item B */}
+                    <li>
+                        <NavLink
+                            to="sidebarItemB"
+                            className={({ isActive }) => (isActive ? activeClass : normalClass)}
+                        >
+                            <CheckCircle className="w-4 h-4 mr-2" /> Sidebar Item B
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
         </div>

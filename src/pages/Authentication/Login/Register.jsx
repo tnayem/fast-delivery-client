@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import { Link, useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
+import useAxiosInstant from '../../../hooks/useAxiosInstant';
 
 const Register = () => {
+    const axiosInstant = useAxiosInstant()
     const { createUser,updateUser} = useAuth()
     const location = useLocation()
     const from = location?.state || '/'
@@ -20,8 +22,16 @@ const Register = () => {
         const photoUrl = (imageRes.data.data.display_url);
         // Create user
         createUser(data.email, data.password)
-            .then(result => {
+            .then(async(result) => {
                 // Update Mongodb 
+                const updatedInfo = {
+                    email:data.email,
+                    role:'user', // default role
+                    created_at: new Date().toISOString(),
+                    lastLogIn: new Date().toISOString()
+                }
+                const userRes= await axiosInstant.post('/users',updatedInfo)
+                console.log(userRes.data);
                 // Update profile in firebase 
                 updateUser({
                     displayName:data.name,
